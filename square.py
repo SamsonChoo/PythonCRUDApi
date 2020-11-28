@@ -1,3 +1,4 @@
+from rectangle import Rectangle
 class Square (Rectangle):
     """Square class inheriting from Rectangle"""
       
