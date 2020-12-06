@@ -3,7 +3,7 @@ import pymysql
 from dotenv import load_dotenv
 import os
 from json import dumps
-from flask.ext.bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt
 
 load_dotenv()
 
@@ -22,7 +22,7 @@ from flask import Flask
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
-@app.route('/users/register')
+@app.route('/users/fetchAll')
 def registerUser():
     query_data = 'select * from users'
     db_cursor.execute(query_data)
