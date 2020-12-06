@@ -22,8 +22,15 @@ from flask import Flask
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
-@app.route('/users/fetchAll')
+@app.route('/users/register')
 def registerUser():
+    query_data = 'select * from users'
+    db_cursor.execute(query_data)
+    all_users = db_cursor.fetchall()
+    return dumps(all_users)
+
+@app.route('/users/fetchAll')
+def fetchAllUsers():
     query_data = 'select * from users'
     db_cursor.execute(query_data)
     all_users = db_cursor.fetchall()
