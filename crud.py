@@ -1,3 +1,4 @@
+from flask import Flask
 import requests
 import pymysql
 from dotenv import load_dotenv
@@ -17,17 +18,17 @@ db_conn_write = pymysql.connect(host_db, user_db, password_db,
 
 db_cursor = db_conn_write.cursor()
 
-from flask import Flask
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
-@app.route('/users/register')
-def registerUser():
-    query_data = 'select * from users'
-    db_cursor.execute(query_data)
-    all_users = db_cursor.fetchall()
-    return dumps(all_users)
+
+@app.route('/users/register', methods=['PUT'])
+def registerUser(userName, password):
+    query_data = 'INSERT INTO `users` (`user_name`, `password`) VALUES (%s, %s)'
+    db_cursor.execute(query_data, (userName, password))
+    connection.commit()
+
 
 @app.route('/users/fetchAll')
 def fetchAllUsers():
@@ -35,5 +36,6 @@ def fetchAllUsers():
     db_cursor.execute(query_data)
     all_users = db_cursor.fetchall()
     return dumps(all_users)
+
 
 app.run()
