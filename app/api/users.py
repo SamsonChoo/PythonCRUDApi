@@ -1,11 +1,13 @@
 from . import api
-from flask import jsonify, request, url_for
+from flask import jsonify, request, url_for, abort
 from ..models import User
 from .errors import bad_request
 from .. import db
+from .auth import token_auth
 
 
 @api.route('/users/<int:id>', methods=['GET'])
+@token_auth.login_required
 def get_user(id):
     return jsonify(User.query.get_or_404(id).to_dict())
 
@@ -35,7 +37,10 @@ def create_user():
 
 
 @api.route('/users/<int:id>', methods=['PUT'])
+@token_auth.login_required
 def update_user(id):
+    if token_auth.current_user().id != id:
+        abort(403)
     user = User.query.get_or_404(id)
     data = request.get_json() or {}
     if 'user_name' in data and data['user_name'] != user.user_name and User.query.filter_by(username=data['username']).first():
