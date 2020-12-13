@@ -9,15 +9,12 @@ from .auth import token_auth
 @api.route('/users/<int:id>', methods=['GET'])
 @token_auth.login_required
 def get_user(id):
+    if token_auth.current_user().user_id != id:
+        abort(403)
     return jsonify(User.query.get_or_404(id).to_dict())
 
 
-@api.route('/users', methods=['GET'])
-def get_users():
-    pass
-
-
-@api.route('/users', methods=['POST'])
+@api.route('/users/register', methods=['POST'])
 def create_user():
     data = request.get_json() or {}
     if 'user_name' not in data or 'password' not in data:
@@ -39,7 +36,7 @@ def create_user():
 @api.route('/users/<int:id>', methods=['PUT'])
 @token_auth.login_required
 def update_user(id):
-    if token_auth.current_user().id != id:
+    if token_auth.current_user().user_id != id:
         abort(403)
     user = User.query.get_or_404(id)
     data = request.get_json() or {}
