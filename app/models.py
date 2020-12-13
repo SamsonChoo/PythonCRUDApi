@@ -1,5 +1,5 @@
 from flask_login import UserMixin
-from app import db, login_manager
+from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import url_for
 import base64
@@ -82,9 +82,3 @@ class User(UserMixin, db.Model):
         if user is None or user.token_expiration < datetime.utcnow():
             return None
         return user
-
-
-# Set up user_loader
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
