@@ -26,6 +26,9 @@ class User(UserMixin, db.Model):
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
 
+    def __repr__(self):
+        return '<User: {}>'.format(self.username)
+
     def set_password(self, password):
         """
         Set password to a hashed password
@@ -40,9 +43,6 @@ class User(UserMixin, db.Model):
 
     def get_id(self):
         return (self.user_id)
-
-    def __repr__(self):
-        return '<User: {}>'.format(self.username)
 
     def to_dict(self):
         data = {
