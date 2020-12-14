@@ -26,11 +26,11 @@ def create_user():
     if 'email' in data and User.query.filter_by(email=data['email']).first():
         return bad_request('please use a different email address')
     email_valid = validate_email(
-        email_address=data['email'], check_regex=True, check_mx=True, use_blacklist=True, debug=False)
+        email_address=data['email'], check_regex=True, check_mx=False)
     if not email_valid:
         return bad_request('please enter a valid email address')
     password_strength = safe.check(data['password'])
-    if not password_strength.valid():
+    if not password_strength.valid:
         return bad_request('please enter a stronger password')
     user = User()
     user.from_dict(data, new_user=True)
