@@ -1,6 +1,7 @@
 from . import api
 from flask import jsonify, request, url_for, abort
 from validate_email import validate_email
+import safe
 from ..models import User
 from .errors import bad_request
 from .. import db
@@ -28,6 +29,9 @@ def create_user():
         email_address=data['email'], check_regex=True, check_mx=True, use_blacklist=True, debug=False)
     if not email_valid:
         return bad_request('please enter a valid email address')
+    password_strength = safe.check(data['password'])
+    if not password_strength.valid():
+        return bad_request('please enter a stronger password')
     user = User()
     user.from_dict(data, new_user=True)
     db.session.add(user)
