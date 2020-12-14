@@ -17,7 +17,7 @@ class DevelopmentConfig(Config):
     Development configurations
     """
 
-    DEBUG = True
+    FLASK_DEBUG = True
     SQLALCHEMY_ECHO = True
 
 
@@ -26,7 +26,7 @@ class ProductionConfig(Config):
     Production configurations
     """
 
-    DEBUG = False
+    FLASK_DEBUG = False
     SQLALCHEMY_ECHO = False
 
 
