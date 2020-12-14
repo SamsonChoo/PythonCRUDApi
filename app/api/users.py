@@ -1,5 +1,6 @@
 from . import api
 from flask import jsonify, request, url_for, abort
+from validate_email import validate_email
 from ..models import User
 from .errors import bad_request
 from .. import db
@@ -23,6 +24,10 @@ def create_user():
         return bad_request('please use a different username')
     if 'email' in data and User.query.filter_by(email=data['email']).first():
         return bad_request('please use a different email address')
+    email_valid = validate_email(
+        email_address=data['email'], check_regex=True, check_mx=True, use_blacklist=True, debug=False)
+    if not email_valid:
+        return bad_request('please enter a valid email address')
     user = User()
     user.from_dict(data, new_user=True)
     db.session.add(user)
