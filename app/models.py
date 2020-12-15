@@ -52,7 +52,7 @@ class User(UserMixin, db.Model):
             'first_name': self.first_name,
             'last_name': self.last_name,
             '_links': {
-                'self': url_for('api.get_user', id=self.user_id)
+                'self': url_for('api.get_user', user_name=self.user_name)
             }
         }
         return data

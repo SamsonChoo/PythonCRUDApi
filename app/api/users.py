@@ -8,12 +8,12 @@ from .. import db
 from .auth import token_auth
 
 
-@api.route('/users/<int:id>', methods=['GET'])
+@api.route('/users/<string:user_name>', methods=['GET'])
 @token_auth.login_required
-def get_user(id):
-    if token_auth.current_user().user_id != id:
+def get_user(user_name):
+    if token_auth.current_user().user_name != user_name:
         abort(403)
-    return jsonify(User.query.get_or_404(id).to_dict())
+    return jsonify(User.query.filter_by(user_name=user_name).one().to_dict())
 
 
 @api.route('/users/register', methods=['POST'])
@@ -38,11 +38,12 @@ def create_user():
     db.session.commit()
     response = jsonify(user.to_dict())
     response.status_code = 201
-    response.headers['Location'] = url_for('api.get_user', id=user.user_id)
+    response.headers['Location'] = url_for(
+        'api.get_user', user_name=user.user_name)
     return response
 
 
-@api.route('/users/<int:id>', methods=['PUT'])
+@api.route('/users/<string:>', methods=['PUT'])
 @token_auth.login_required
 def update_user(id):
     if token_auth.current_user().user_id != id:
