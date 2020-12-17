@@ -60,7 +60,7 @@ def update_user_by_id(user_id):
         abort(403)
     user = User.query.get_or_404(user_id)
     data = request.get_json() or {}
-    if 'user_name' in data and data['user_name'] != user.user_name and User.query.filter_by(username=data['username']).first():
+    if 'user_name' in data and data['user_name'] != user.user_name and User.query.filter_by(user_name=data['user_name']).first():
         return bad_request('please use a different username')
     if 'email' in data and data['email'] != user.email and User.query.filter_by(email=data['email']).first():
         return bad_request('please use a different email address')
@@ -76,7 +76,7 @@ def update_user_by_user_name(user_name):
         abort(403)
     user = User.query.filter_by(user_name=user_name).one()
     data = request.get_json() or {}
-    if 'user_name' in data and data['user_name'] != user.user_name and User.query.filter_by(username=data['username']).first():
+    if 'user_name' in data and data['user_name'] != user.user_name and User.query.filter_by(user_name=data['user_name']).first():
         return bad_request('please use a different username')
     if 'email' in data and data['email'] != user.email and User.query.filter_by(email=data['email']).first():
         return bad_request('please use a different email address')

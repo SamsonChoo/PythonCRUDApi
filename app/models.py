@@ -60,7 +60,7 @@ class User(UserMixin, db.Model):
 
     def from_dict(self, data, new_user=False):
         for field in ['user_name', 'email', 'first_name', 'last_name']:
-            if field in data:
+            if field in data and data[field]:
                 setattr(self, field, data[field])
         if new_user and 'password' in data:
             self.set_password(data['password'])
