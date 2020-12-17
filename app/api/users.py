@@ -60,15 +60,7 @@ def update_user_by_id(user_id):
         abort(403)
     user = User.query.get_or_404(user_id)
     data = request.get_json() or {}
-    if 'user_name' in data and data['user_name'] != user.user_name and User.query.filter_by(user_name=data['user_name']).first():
-        return bad_request('please use a different username')
-    if 'email' in data and data['email'] != user.email and User.query.filter_by(email=data['email']).first():
-        return bad_request('please use a different email address')
-    if 'password' in data and not safe.check(data['password'].valid):
-        return bad_request('please enter a stronger password')
-    user.from_dict(data, new_user=False)
-    db.session.commit()
-    return jsonify(user.to_dict())
+    return update_user_helper(user, data)
 
 
 @api.route('/users/<string:user_name>', methods=['PUT'])
@@ -78,10 +70,16 @@ def update_user_by_user_name(user_name):
         abort(403)
     user = User.query.filter_by(user_name=user_name).one()
     data = request.get_json() or {}
+    return update_user_helper(user, data)
+
+
+def update_user_helper(user, data):
     if 'user_name' in data and data['user_name'] != user.user_name and User.query.filter_by(user_name=data['user_name']).first():
         return bad_request('please use a different username')
     if 'email' in data and data['email'] != user.email and User.query.filter_by(email=data['email']).first():
         return bad_request('please use a different email address')
+    if 'password' in data and not safe.check(data['password'].valid):
+        return bad_request('please enter a stronger password')
     user.from_dict(data, new_user=False)
     db.session.commit()
     return jsonify(user.to_dict())
