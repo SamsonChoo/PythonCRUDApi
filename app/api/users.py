@@ -10,10 +10,18 @@ from .auth import token_auth
 
 @api.route('/users/<string:user_name>', methods=['GET'])
 @token_auth.login_required
-def get_user(user_name):
+def get_user_by_name(user_name):
     if token_auth.current_user().user_name != user_name:
         abort(403)
     return jsonify(User.query.filter_by(user_name=user_name).one().to_dict())
+
+
+@api.route('/users/<int:user_id>', methods=['GET'])
+@token_auth.login_required
+def get_user_by_id(user_id):
+    if token_auth.current_user().user_id != user_id:
+        abort(403)
+    return jsonify(User.query.get_or_404(user_id).to_dict())
 
 
 @api.route('/users/register', methods=['POST'])
@@ -23,12 +31,13 @@ def create_user():
         return bad_request('must include user_name and password fields')
     if User.query.filter_by(user_name=data['user_name']).first():
         return bad_request('please use a different username')
-    if 'email' in data and User.query.filter_by(email=data['email']).first():
-        return bad_request('please use a different email address')
-    email_valid = validate_email(
-        email_address=data['email'], check_regex=True, check_mx=False)
-    if not email_valid:
-        return bad_request('please enter a valid email address')
+    if 'email' in data:
+        email_valid = validate_email(
+            email_address=data['email'], check_regex=True, check_mx=False)
+        if not email_valid:
+            return bad_request('please enter a valid email address')
+        if User.query.filter_by(email=data['email']).first():
+            return bad_request('please use a different email address')
     password_strength = safe.check(data['password'])
     if not password_strength.valid:
         return bad_request('please enter a stronger password')
@@ -38,12 +47,13 @@ def create_user():
     db.session.commit()
     response = jsonify(user.to_dict())
     response.status_code = 201
-    response.headers['Location'] = url_for(
-        'api.get_user', user_name=user.user_name)
+    response.headers['Location'] = [url_for(
+        'api.get_user_by_name', user_name=user.user_name), url_for(
+        'api.get_user_by_id', user_id=user.user_id)]
     return response
 
 
-@api.route('/users/<string:>', methods=['PUT'])
+@api.route('/users/<string:user_name>', methods=['PUT'])
 @token_auth.login_required
 def update_user(id):
     if token_auth.current_user().user_id != id:
