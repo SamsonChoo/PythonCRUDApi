@@ -12,7 +12,7 @@ def get_token():
     return jsonify({'token': token})
 
 
-@api.route('/tokens', methods=['DELETE'])
+@api.route('/logout', methods=['DELETE'])
 @token_auth.login_required
 def revoke_token():
     token_auth.current_user().revoke_token()
