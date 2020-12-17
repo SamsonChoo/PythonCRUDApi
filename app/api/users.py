@@ -83,3 +83,23 @@ def update_user_helper(user, data):
     user.from_dict(data, new_user=False)
     db.session.commit()
     return jsonify(user.to_dict())
+
+
+@api.route('/users/<string:user_name>', methods=['DELETE'])
+@token_auth.login_required
+def del_user_by_user_name(user_name):
+    if token_auth.current_user().user_name != user_name:
+        abort(403)
+    db.session.delete(User.query.filter_by(user_name=user_name).one())
+    db.session.commit()
+    return '', 204
+
+
+@api.route('/users/<int:user_id>', methods=['DELETE'])
+@token_auth.login_required
+def del_user_by_user_id(user_id):
+    if token_auth.current_user().user_id != user_id:
+        abort(403)
+    db.session.delete(User.query.get_or_404(user_id))
+    db.session.commit()
+    return '', 204
