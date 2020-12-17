@@ -2,7 +2,7 @@ from . import api
 from flask import jsonify, request, url_for, abort
 from validate_email import validate_email
 import safe
-from ..models import User
+from ..models.user import User
 from .errors import bad_request
 from .. import db
 from .auth import token_auth
