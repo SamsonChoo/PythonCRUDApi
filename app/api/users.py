@@ -64,6 +64,8 @@ def update_user_by_id(user_id):
         return bad_request('please use a different username')
     if 'email' in data and data['email'] != user.email and User.query.filter_by(email=data['email']).first():
         return bad_request('please use a different email address')
+    if 'password' in data and not safe.check(data['password'].valid):
+        return bad_request('please enter a stronger password')
     user.from_dict(data, new_user=False)
     db.session.commit()
     return jsonify(user.to_dict())
