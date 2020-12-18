@@ -25,6 +25,8 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128), nullable=False)
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
+    rectangles = db.relationship(
+        'Rectangles', cascade='all,delete', backref='users')
 
     def __repr__(self):
         return '<User: {}>'.format(self.username)
