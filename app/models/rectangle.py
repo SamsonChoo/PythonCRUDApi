@@ -21,20 +21,25 @@ class Rectangle(db.Model):
         return '<Rectangle: {} x {}>'.format(self.length, self.width)
 
     def get_area(self):
-        return self.length * self.width
+        area = self.length * self.width
+        data = {'Area': area}
+        return data
 
     def get_perimeter(self):
-        return (self.length + self.width) * 2
+        perimeter = (self.length + self.width) * 2
+        data = {'Perimeter': perimeter}
+        return data
 
     def to_dict(self):
         data = {
             'rectangle_id': self.rectangle_id,
             'user_id': self.user_id,
             'length': self.length,
-            'width': self.width
-            # '_links': {
-            #     'self_by_user_name': url_for('api.get_user_by_user_name', user_name=self.user_name),
-            #     'self_by_id': url_for('api.get_user_by_id', user_id=self.user_id)
-            # }
+            'width': self.width,
+            '_links': {
+                'self': url_for('api.get_rectangle', user_id=self.user_id, rectangle_id=self.rectangle_id),
+                'area': url_for('api.get_rectangle_area', user_id=self.user_id, rectangle_id=self.rectangle_id),
+                'perimeter': url_for('api.get_rectangle_perimeter', user_id=self.user_id, rectangle_id=self.rectangle_id)
+            }
         }
         return data
