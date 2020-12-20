@@ -27,34 +27,23 @@ def get_rectangle_perimeter(rectangle_id):
     return jsonify(Rectangle.query.filter_by(user_id=user_id, rectangle_id=rectangle_id).one().get_perimeter())
 
 
-# @api.route('/rectangles/<int:user_id>', methods=['POST'])
-# @token_auth.login_required
-# def create_rectangle(user_id):
-#     if token_auth.current_user().user_id != user_id:
-#         abort(403)
-#     data = request.get_json() or {}
-#     if 'length' not in data or 'width' not in data:
-#         return bad_request('must include length and width fields')
-
-#     if User.query.filter_by(user_name=data['user_name']).first():
-#         return bad_request('please use a different username')
-#     if 'email' in data:
-#         email_valid = validate_email(
-#             email_address=data['email'], check_regex=True, check_mx=False)
-#         if not email_valid:
-#             return bad_request('please enter a valid email address')
-#         if User.query.filter_by(email=data['email']).first():
-#             return bad_request('please use a different email address')
-#     password_strength = safe.check(data['password'])
-#     if not password_strength.valid:
-#         return bad_request('please enter a stronger password')
-#     user = User()
-#     user.from_dict(data, new_user=True)
-#     db.session.add(user)
-#     db.session.commit()
-#     response = jsonify(user.to_dict())
-#     response.status_code = 201
-#     response.headers['Location'] = [url_for(
-#         'api.get_user_by_user_name', user_name=user.user_name), url_for(
-#         'api.get_user_by_user_id', user_id=user.user_id)]
-#     return response
+@api.route('/rectangles', methods=['POST'])
+@token_auth.login_required
+def create_rectangle():
+    user_id = token_auth.current_user().user_id
+    data = request.get_json() or {}
+    if 'length' not in data or 'width' not in data:
+        return bad_request('must include length and width fields')
+    if type(data['length']) != int or type(data['width']) != int:
+        return bad_request('length and width must be integers')
+    if data['length'] <= 0 or data['width'] <= 0:
+        return bad_request('length and width must be positive')
+    rectangle = Rectangle()
+    rectangle.from_dict(data, user_id, new_rectangle=True)
+    db.session.add(rectangle)
+    db.session.commit()
+    response = jsonify(rectangle.to_dict())
+    response.status_code = 201
+    response.headers['Location'] = [url_for(
+        'api.get_rectangle', rectangle_id=rectangle.rectangle_id)]
+    return response

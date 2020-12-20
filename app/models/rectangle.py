@@ -45,9 +45,10 @@ class Rectangle(db.Model):
         }
         return data
 
-    # def from_dict(self, data, new_rectangle=False):
-    #     for field in ['length', 'width']:
-    #         if field in data and data[field]:
-    #             setattr(self, field, data[field])
-    #     if new_rectangle:
-    #         self.set_password(data['password'])
+    def from_dict(self, data, user_id, new_rectangle=False):
+        for field in ['length', 'width']:
+            if field in data and data[field]:
+                setattr(self, field, data[field])
+        self.user_id = user_id
+        if not new_rectangle:
+            self.rectangle_id = data['rectangle_id']
