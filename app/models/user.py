@@ -5,6 +5,7 @@ from flask import url_for
 import base64
 from datetime import datetime, timedelta
 import os
+from .rectangle import Rectangle
 
 
 class User(UserMixin, db.Model):
@@ -26,7 +27,7 @@ class User(UserMixin, db.Model):
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
     rectangles = db.relationship(
-        'Rectangles', cascade='all,delete', backref='users')
+        'Rectangle', cascade='all,delete', backref='users')
 
     def __repr__(self):
         return '<User: {}>'.format(self.username)

@@ -25,3 +25,16 @@ class Rectangle(db.Model):
 
     def get_perimeter(self):
         return (self.length + self.width) * 2
+
+    def to_dict(self):
+        data = {
+            'rectangle_id': self.rectangle_id,
+            'user_id': self.user_id,
+            'length': self.length,
+            'width': self.width
+            # '_links': {
+            #     'self_by_user_name': url_for('api.get_user_by_user_name', user_name=self.user_name),
+            #     'self_by_id': url_for('api.get_user_by_id', user_id=self.user_id)
+            # }
+        }
+        return data
