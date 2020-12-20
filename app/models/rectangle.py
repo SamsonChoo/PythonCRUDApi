@@ -37,6 +37,7 @@ class Rectangle(db.Model):
             'length': self.length,
             'width': self.width,
             '_links': {
+                'owner': url_for('api.get_user_by_user_id', user_id=self.user_id),
                 'self': url_for('api.get_rectangle', rectangle_id=self.rectangle_id),
                 'area': url_for('api.get_rectangle_area', rectangle_id=self.rectangle_id),
                 'perimeter': url_for('api.get_rectangle_perimeter', rectangle_id=self.rectangle_id)

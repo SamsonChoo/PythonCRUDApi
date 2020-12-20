@@ -56,5 +56,5 @@ def get_rectangle_perimeter(rectangle_id):
 #     response.status_code = 201
 #     response.headers['Location'] = [url_for(
 #         'api.get_user_by_user_name', user_name=user.user_name), url_for(
-#         'api.get_user_by_id', user_id=user.user_id)]
+#         'api.get_user_by_user_id', user_id=user.user_id)]
 #     return response

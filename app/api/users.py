@@ -18,7 +18,7 @@ def get_user_by_user_name(user_name):
 
 @api.route('/users/<int:user_id>', methods=['GET'])
 @token_auth.login_required
-def get_user_by_id(user_id):
+def get_user_by_user_id(user_id):
     if token_auth.current_user().user_id != user_id:
         abort(403)
     return jsonify(User.query.get_or_404(user_id).to_dict())
@@ -49,13 +49,13 @@ def create_user():
     response.status_code = 201
     response.headers['Location'] = [url_for(
         'api.get_user_by_user_name', user_name=user.user_name), url_for(
-        'api.get_user_by_id', user_id=user.user_id)]
+        'api.get_user_by_user_id', user_id=user.user_id)]
     return response
 
 
 @api.route('/users/<int:user_id>', methods=['PUT'])
 @token_auth.login_required
-def update_user_by_id(user_id):
+def update_user_by_user_id(user_id):
     if token_auth.current_user().user_id != user_id:
         abort(403)
     user = User.query.get_or_404(user_id)
