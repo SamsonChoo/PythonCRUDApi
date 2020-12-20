@@ -63,3 +63,13 @@ def update_rectangle(rectangle_id):
     rectangle.from_dict(data, user_id)
     db.session.commit()
     return jsonify(rectangle.to_dict())
+
+
+@api.route('/rectangles/<int:rectangle_id>', methods=['DELETE'])
+@token_auth.login_required
+def del_rectangle(rectangle_id):
+    user_id = token_auth.current_user().user_id
+    db.session.delete(Rectangle.query.filter_by(
+        user_id=user_id, rectangle_id=rectangle_id).one())
+    db.session.commit()
+    return '', 204
