@@ -37,9 +37,16 @@ class Rectangle(db.Model):
             'length': self.length,
             'width': self.width,
             '_links': {
-                'self': url_for('api.get_rectangle', user_id=self.user_id, rectangle_id=self.rectangle_id),
-                'area': url_for('api.get_rectangle_area', user_id=self.user_id, rectangle_id=self.rectangle_id),
-                'perimeter': url_for('api.get_rectangle_perimeter', user_id=self.user_id, rectangle_id=self.rectangle_id)
+                'self': url_for('api.get_rectangle', rectangle_id=self.rectangle_id),
+                'area': url_for('api.get_rectangle_area', rectangle_id=self.rectangle_id),
+                'perimeter': url_for('api.get_rectangle_perimeter', rectangle_id=self.rectangle_id)
             }
         }
         return data
+
+    # def from_dict(self, data, new_rectangle=False):
+    #     for field in ['length', 'width']:
+    #         if field in data and data[field]:
+    #             setattr(self, field, data[field])
+    #     if new_rectangle:
+    #         self.set_password(data['password'])
