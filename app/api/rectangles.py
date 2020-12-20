@@ -13,6 +13,7 @@ def get_rectangle(rectangle_id):
     return jsonify(Rectangle.query.filter_by(user_id=user_id, rectangle_id=rectangle_id).one().to_dict())
 
 
+@api.route('/squares/<int:rectangle_id>/area', methods=['GET'], endpoint='get_square_area')
 @api.route('/rectangles/<int:rectangle_id>/area', methods=['GET'])
 @token_auth.login_required
 def get_rectangle_area(rectangle_id):
@@ -20,6 +21,7 @@ def get_rectangle_area(rectangle_id):
     return jsonify(Rectangle.query.filter_by(user_id=user_id, rectangle_id=rectangle_id).one().get_area())
 
 
+@api.route('/squares/<int:rectangle_id>/perimeter', methods=['GET'], endpoint='get_square_perimeter')
 @api.route('/rectangles/<int:rectangle_id>/perimeter', methods=['GET'])
 @token_auth.login_required
 def get_rectangle_perimeter(rectangle_id):
