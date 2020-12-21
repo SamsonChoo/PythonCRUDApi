@@ -7,6 +7,7 @@ class Config(object):
     """
 
     # Put any configurations here that are common across all environments
+    TESTING = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'IHateThisFluPandemic'
@@ -30,7 +31,19 @@ class ProductionConfig(Config):
     SQLALCHEMY_ECHO = False
 
 
+class TestConfig(Config):
+    """
+    Testing configurations
+    """
+
+    TESTING = True
+    FLASK_DEBUG = True
+    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI_TEST')
+
+
 app_config = {
     'development': DevelopmentConfig,
-    'production': ProductionConfig
+    'production': ProductionConfig,
+    'test': TestConfig
 }

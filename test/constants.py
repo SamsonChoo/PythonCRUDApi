@@ -1,0 +1,5 @@
+USER_NAME = 'test'
+PASSWORD_STRONG = 'Str0ngP@ssw0rd'
+EMAIL_VALID = 'test@example.com'
+FIRST_NAME = 'test'
+LAST_NAME = 'test'
