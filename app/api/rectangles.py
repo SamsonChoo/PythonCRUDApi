@@ -67,6 +67,7 @@ def update_rectangle(rectangle_id):
     return jsonify(rectangle.to_dict())
 
 
+@api.route('/squares/<int:rectangle_id>', methods=['DELETE'], endpoint='del_square')
 @api.route('/rectangles/<int:rectangle_id>', methods=['DELETE'])
 @token_auth.login_required
 def del_rectangle(rectangle_id):

@@ -49,13 +49,3 @@ def update_square(rectangle_id):
     square.from_dict(data, user_id)
     db.session.commit()
     return jsonify(square.to_dict())
-
-
-@api.route('/squares/<int:rectangle_id>', methods=['DELETE'])
-@token_auth.login_required
-def del_square(rectangle_id):
-    user_id = token_auth.current_user().user_id
-    db.session.delete(Square.query.filter_by(
-        user_id=user_id, rectangle_id=rectangle_id).one())
-    db.session.commit()
-    return '', 204
