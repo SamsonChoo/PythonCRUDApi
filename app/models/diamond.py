@@ -34,8 +34,8 @@ class Diamond(db.Model):
     __tablename__ = 'diamonds'
 
     diamond_id = db.Column(db.Integer, primary_key=True)
-    diagonal1 = db.Column(db.Integer)
-    diagonal2 = db.Column(db.Integer)
+    diagonal1 = db.Column(db.Float)
+    diagonal2 = db.Column(db.Float)
     user_id = db.Column(db.Integer, db.ForeignKey(
         'users.user_id'), nullable=False)
 

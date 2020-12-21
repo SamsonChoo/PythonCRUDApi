@@ -34,8 +34,9 @@ def create_diamond():
     data = request.get_json() or {}
     if 'diagonal1' not in data or 'diagonal2' not in data:
         return bad_request('must include diagonal1 and diagonal2 fields')
-    if type(data['diagonal1']) != int or type(data['diagonal2']) != int:
-        return bad_request('diagonal1 and diagonal2 must be integers')
+    if (type(data['diagonal1']) != int and type(data['diagonal1']) != float or
+            type(data['diagonal2']) != int and type(data['diagonal2']) != float):
+        return bad_request('diagonal1 and diagonal2 must be numbers')
     if data['diagonal1'] <= 0 or data['diagonal2'] <= 0:
         return bad_request('diagonal1 and diagonal2 must be positive')
     diamond = Diamond()
@@ -56,8 +57,9 @@ def update_diamond(diamond_id):
     diamond = Diamond.query.filter_by(
         user_id=user_id, diamond_id=diamond_id).one()
     data = request.get_json() or {}
-    if 'diagonal1' in data and type(data['diagonal1']) != int or 'diagonal2' in data and type(data['diagonal2']) != int:
-        return bad_request('diagonal1 and diagonal2 must be integers')
+    if ('diagonal1' in data and type(data['diagonal1']) != int and type(data['diagonal1']) != float or
+            'diagonal2' in data and type(data['diagonal2']) != int and type(data['diagonal2']) != float):
+        return bad_request('diagonal1 and diagonal2 must be numbers')
     if 'diagonal1' in data and data['diagonal1'] <= 0 or 'diagonal2' in data and data['diagonal2'] <= 0:
         return bad_request('diagonal1 and diagonal2 must be positive')
     diamond.from_dict(data, user_id)

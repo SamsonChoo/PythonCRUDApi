@@ -13,9 +13,9 @@ class Triangle(db.Model):
     __tablename__ = 'triangles'
 
     triangle_id = db.Column(db.Integer, primary_key=True)
-    side1 = db.Column(db.Integer)
-    side2 = db.Column(db.Integer)
-    side3 = db.Column(db.Integer)
+    side1 = db.Column(db.Float)
+    side2 = db.Column(db.Float)
+    side3 = db.Column(db.Float)
     user_id = db.Column(db.Integer, db.ForeignKey(
         'users.user_id'), nullable=False)
 

@@ -17,7 +17,7 @@ def create_app(config_name):
     app.config.from_object(app_config[config_name])
     db.init_app(app)
 
-    migrate = Migrate(app, db)
+    migrate = Migrate(app, db, compare_type=True)
 
     from .models import user, rectangle, square, triangle, diamond
 

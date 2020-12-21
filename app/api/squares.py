@@ -20,8 +20,8 @@ def create_square():
     data = request.get_json() or {}
     if 'length' not in data:
         return bad_request('must include length field')
-    if type(data['length']) != int:
-        return bad_request('length must be an integer')
+    if type(data['length']) != int and type(data['length']) != float:
+        return bad_request('length must be a number')
     if data['length'] <= 0:
         return bad_request('length must be positive')
     square = Square()
@@ -42,8 +42,8 @@ def update_square(rectangle_id):
     square = Square.query.filter_by(
         user_id=user_id, rectangle_id=rectangle_id).one()
     data = request.get_json() or {}
-    if 'length' in data and type(data['length']) != int:
-        return bad_request('length must be an integer')
+    if 'length' in data and type(data['length']) != int and type(data['length']) != float:
+        return bad_request('length must be a number')
     if 'length' in data and data['length'] <= 0:
         return bad_request('length must be positive')
     square.from_dict(data, user_id)

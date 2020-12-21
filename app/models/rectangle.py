@@ -12,8 +12,8 @@ class Rectangle(db.Model):
     __tablename__ = 'rectangles'
 
     rectangle_id = db.Column(db.Integer, primary_key=True)
-    length = db.Column(db.Integer)
-    width = db.Column(db.Integer)
+    length = db.Column(db.Float)
+    width = db.Column(db.Float)
     user_id = db.Column(db.Integer, db.ForeignKey(
         'users.user_id'), nullable=False)
 
