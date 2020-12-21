@@ -34,6 +34,7 @@ def create_app(config_name):
         file_handler.setLevel(logging.INFO)
         app.logger.addHandler(file_handler)
     app.logger.setLevel(logging.INFO)
-    app.logger.info('Python CRUD API startup')
+    if config_name != 'test':
+        app.logger.info('Python CRUD API startup')
 
     return app

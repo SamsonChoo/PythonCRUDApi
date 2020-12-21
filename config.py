@@ -37,9 +37,10 @@ class TestConfig(Config):
     """
 
     TESTING = True
-    FLASK_DEBUG = True
-    SQLALCHEMY_ECHO = True
+    FLASK_DEBUG = False
+    SQLALCHEMY_ECHO = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI_TEST')
+    PRESERVE_CONTEXT_ON_EXCEPTION = False
 
 
 app_config = {
