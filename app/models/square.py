@@ -7,7 +7,7 @@ class Square(Rectangle):
     Square class extending Rectangle
     """
 
-    def __init__(self, length, user_id):
+    def __init__(self, length=None, user_id=None):
         self.length = length
         self.width = length
         self.user_id = user_id

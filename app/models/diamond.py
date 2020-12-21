@@ -18,7 +18,7 @@ class Diamond(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(
         'users.user_id'), nullable=False)
 
-    def __init__(self, diagonal1, diagonal2, user_id):
+    def __init__(self, diagonal1=None, diagonal2=None, user_id=None):
         self.diagonal1 = diagonal1
         self.diagonal2 = diagonal2
         self.user_id = user_id

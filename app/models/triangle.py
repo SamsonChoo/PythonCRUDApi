@@ -19,7 +19,7 @@ class Triangle(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(
         'users.user_id'), nullable=False)
 
-    def __init__(self, side1, side2, side3, user_id):
+    def __init__(self, side1=None, side2=None, side3=None, side4=None, user_id=None):
         self.side1 = side1
         self.side2 = side2
         self.side3 = side3

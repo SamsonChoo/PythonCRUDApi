@@ -38,9 +38,10 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return '<User: {}>'.format(self.username)
 
-    def __init__(self, user_name, password, first_name=None, last_name=None, email=None, token=None, token_expiration=None):
+    def __init__(self, user_name=None, password=None, first_name=None, last_name=None, email=None, token=None, token_expiration=None):
         self.user_name = user_name
-        self.password_hash = generate_password_hash(password)
+        if password is not None:
+            self.password_hash = generate_password_hash(password)
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
