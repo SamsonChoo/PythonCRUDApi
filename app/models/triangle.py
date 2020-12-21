@@ -45,7 +45,9 @@ class Triangle(db.Model):
                 'owner': url_for('api.get_user_by_user_id', user_id=self.user_id),
                 'self': url_for('api.get_triangle', triangle_id=self.triangle_id),
                 'area': url_for('api.get_triangle_area', triangle_id=self.triangle_id),
-                'perimeter': url_for('api.get_triangle_perimeter', triangle_id=self.triangle_id)
+                'perimeter': url_for('api.get_triangle_perimeter', triangle_id=self.triangle_id),
+                'update': url_for('api.update_triangle', triangle_id=self.triangle_id),
+                'delete': url_for('api.del_triangle', triangle_id=self.triangle_id)
             }
         }
         return data

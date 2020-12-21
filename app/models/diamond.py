@@ -62,7 +62,9 @@ class Diamond(db.Model):
                 'owner': url_for('api.get_user_by_user_id', user_id=self.user_id),
                 'self': url_for('api.get_diamond', diamond_id=self.diamond_id),
                 'area': url_for('api.get_diamond_area', diamond_id=self.diamond_id),
-                'perimeter': url_for('api.get_diamond_perimeter', diamond_id=self.diamond_id)
+                'perimeter': url_for('api.get_diamond_perimeter', diamond_id=self.diamond_id),
+                'update': url_for('api.update_diamond', diamond_id=self.diamond_id),
+                'delete': url_for('api.del_diamond', diamond_id=self.diamond_id)
             }
         }
         return data
