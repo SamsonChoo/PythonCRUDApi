@@ -6,6 +6,7 @@ import base64
 from datetime import datetime, timedelta
 import os
 from .rectangle import Rectangle
+from .triangle import Triangle
 
 
 class User(UserMixin, db.Model):
@@ -28,6 +29,8 @@ class User(UserMixin, db.Model):
     token_expiration = db.Column(db.DateTime)
     rectangles = db.relationship(
         'Rectangle', cascade='all,delete', backref='users')
+    triangle = db.relationship(
+        'Triangle', cascade='all,delete', backref='users')
 
     def __repr__(self):
         return '<User: {}>'.format(self.username)
