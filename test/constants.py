@@ -16,3 +16,7 @@ FIRST_NAME2 = 'test2'
 LAST_NAME2 = 'test2'
 USER_NAME3 = 'test3'
 EMAIL_VALID3 = 'test3@example.com'
+NUMBER_VALID = 3.5
+NUMBER_VALID2 = 5.5
+NUMBER_NEGATIVE = -3.5
+NUMBER_NOT = 'not a number'

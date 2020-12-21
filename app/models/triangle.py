@@ -13,30 +13,30 @@ class Triangle(db.Model):
     __tablename__ = 'triangles'
 
     triangle_id = db.Column(db.Integer, primary_key=True)
-    side1 = db.Column(db.Float)
-    side2 = db.Column(db.Float)
-    side3 = db.Column(db.Float)
+    length1 = db.Column(db.Float)
+    length2 = db.Column(db.Float)
+    length3 = db.Column(db.Float)
     user_id = db.Column(db.Integer, db.ForeignKey(
         'users.user_id'), nullable=False)
 
-    def __init__(self, side1=None, side2=None, side3=None, side4=None, user_id=None):
-        self.side1 = side1
-        self.side2 = side2
-        self.side3 = side3
+    def __init__(self, length1=None, length2=None, length3=None, user_id=None):
+        self.length1 = length1
+        self.length2 = length2
+        self.length3 = length3
         self.user_id = user_id
 
     def __repr__(self):
-        return '<Triangle: {} - {} - {}>'.format(self.side1, self.side2, self.side3)
+        return '<Triangle: {} - {} - {}>'.format(self.length1, self.length2, self.length3)
 
     def get_area(self):
-        halfPerimeter = (self.side1 + self.side2 + self.side3) / 2
-        area = math.sqrt(halfPerimeter * (halfPerimeter - side1)
-                         * (halfPerimeter - side2) * (halfPerimeter - side3))
+        halfPerimeter = (self.length1 + self.length2 + self.length3) / 2
+        area = math.sqrt(halfPerimeter * (halfPerimeter - self.length1)
+                         * (halfPerimeter - self.length2) * (halfPerimeter - self.length3))
         data = {'Area': area}
         return data
 
     def get_perimeter(self):
-        perimeter = self.side1 + self.side2 + self.side3
+        perimeter = self.length1 + self.length2 + self.length3
         data = {'Perimeter': perimeter}
         return data
 
@@ -44,9 +44,9 @@ class Triangle(db.Model):
         data = {
             'triangle_id': self.triangle_id,
             'user_id': self.user_id,
-            'side1': self.side1,
-            'side2': self.side2,
-            'side3': self.side3,
+            'length1': self.length1,
+            'length2': self.length2,
+            'length3': self.length3,
             '_links': {
                 'owner': url_for('api.get_user_by_user_id', user_id=self.user_id),
                 'self': url_for('api.get_triangle', triangle_id=self.triangle_id),
@@ -59,7 +59,7 @@ class Triangle(db.Model):
         return data
 
     def from_dict(self, data, user_id):
-        for field in ['side1', 'side2', 'side3']:
+        for field in ['length1', 'length2', 'length3']:
             if field in data and data[field]:
                 setattr(self, field, data[field])
         self.user_id = user_id
