@@ -47,9 +47,8 @@ def create_user():
     db.session.commit()
     response = jsonify(user.to_dict())
     response.status_code = 201
-    response.headers['Location'] = [url_for(
-        'api.get_user_by_user_name', user_name=user.user_name), url_for(
-        'api.get_user_by_user_id', user_id=user.user_id)]
+    response.headers['Location'] = url_for(
+        'api.get_user_by_user_id', user_id=user.user_id)
     return response
 
 
