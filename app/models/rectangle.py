@@ -17,6 +17,11 @@ class Rectangle(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(
         'users.user_id'), nullable=False)
 
+    def __init__(self, length, width, user_id):
+        self.length = length
+        self.width = width
+        self.user_id = user_id
+
     def __repr__(self):
         return '<Rectangle: {} x {}>'.format(self.length, self.width)
 

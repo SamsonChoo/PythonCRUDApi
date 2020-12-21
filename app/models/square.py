@@ -3,6 +3,15 @@ from .rectangle import Rectangle
 
 
 class Square(Rectangle):
+    """
+    Square class extending Rectangle
+    """
+
+    def __init__(self, length, user_id):
+        self.length = length
+        self.width = length
+        self.user_id = user_id
+
     def __repr__(self):
         return '<Square: {} x {}>'.format(self.length, self.width)
 

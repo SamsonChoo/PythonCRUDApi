@@ -19,6 +19,12 @@ class Triangle(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(
         'users.user_id'), nullable=False)
 
+    def __init__(self, side1, side2, side3, user_id):
+        self.side1 = side1
+        self.side2 = side2
+        self.side3 = side3
+        self.user_id = user_id
+
     def __repr__(self):
         return '<Triangle: {} - {} - {}>'.format(self.side1, self.side2, self.side3)
 
