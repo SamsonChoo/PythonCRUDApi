@@ -272,7 +272,7 @@ class TestGetUser(TestUser):
         self.assertEqual(response.json['email'], constants.EMAIL_VALID)
         self.assertEqual(response.json['first_name'], constants.FIRST_NAME)
         self.assertEqual(response.json['last_name'], constants.LAST_NAME)
-        self.assertEqual(response.json['_links']['self_by_id'], url_for(
+        self.assertEqual(response.json['_links']['self_by_user_id'], url_for(
             'api.get_user_by_user_id', user_id=self.user_id))
         self.assertEqual(response.json['_links']['self_by_user_name'], url_for(
             'api.get_user_by_user_name', user_name=constants.USER_NAME))
@@ -331,7 +331,7 @@ class TestUpdateUser(TestUser):
             response.json['first_name'], constants.FIRST_NAME2)
         self.assertEqual(
             response.json['last_name'], constants.LAST_NAME2)
-        self.assertEqual(response.json['_links']['self_by_id'], url_for(
+        self.assertEqual(response.json['_links']['self_by_user_id'], url_for(
             'api.get_user_by_user_id', user_id=self.user_id))
         self.assertEqual(response.json['_links']['self_by_user_name'], url_for(
             'api.get_user_by_user_name', user_name=constants.USER_NAME2))
@@ -406,5 +406,3 @@ class TestDeleteUser(TestUser):
         response = self.client.delete(
             f'/api/users/{self.user_id + 1}', headers={"Authorization": "Bearer " + constants.TOKEN_VALID})
         self.assert403(response)
-
-

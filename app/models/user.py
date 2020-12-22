@@ -72,7 +72,7 @@ class User(UserMixin, db.Model):
             'last_name': self.last_name,
             '_links': {
                 'self_by_user_name': url_for('api.get_user_by_user_name', user_name=self.user_name),
-                'self_by_id': url_for('api.get_user_by_user_id', user_id=self.user_id),
+                'self_by_user_id': url_for('api.get_user_by_user_id', user_id=self.user_id),
                 'update_self_by_user_name': url_for('api.update_user_by_user_name', user_name=self.user_name),
                 'update_self_by_user_id': url_for('api.update_user_by_user_id', user_id=self.user_id),
                 'create_rectangle': url_for('api.create_rectangle'),
